@@ -84,7 +84,7 @@ After starting your backup service, you can verify if the backups are running pr
 docker logs --follow db_backup
 ```
 
-### Steps for Restoring a MySQL Database
+## Steps for Restoring a MySQL Database
 
 1. Download the `.sql.gz` file from the S3 bucket.
 2. Decompress the SQL file:
@@ -103,7 +103,7 @@ Replace the placeholders `[MYSQL_HOST]`, `[MYSQL_PORT]`, `[MYSQL_USER]`, and `[D
 
 The command will prompt you for the password of the MySQL user.
 
-### Steps for Restoring a PostgreSQL Database
+## Steps for Restoring a PostgreSQL Database
 
 1. Download the `.sql.gz` file from the S3 bucket.
 2. Decompress the SQL file:
