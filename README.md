@@ -10,7 +10,9 @@ I built this because I needed a simple way to back up all the databases on a ser
 - [Configuration](#configuration)
 - [Docker Standalone Usage](#docker-standalone-usage)
 - [Docker Compose Usage](#docker-compose-usage)
-- [Verification](#verification)
+- [Verify that the backups are running](#verify-that-the-backups-are-running)
+- [Steps for Restoring a MySQL Database](#steps-for-restoring-a-mysql-database)
+- [Steps for Restoring a PostgreSQL Database](#steps-for-restoring-a-postgresql-database)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 
@@ -74,13 +76,51 @@ To run the service, enter:
 docker-compose up -d
 ```
 
-## Verification
+## Verify that the backups are running
 
 After starting your backup service, you can verify if the backups are running properly by checking the logs:
 
 ```bash
 docker logs --follow db_backup
 ```
+
+### Steps for Restoring a MySQL Database
+
+1. Download the `.sql.gz` file from the S3 bucket.
+2. Decompress the SQL file:
+
+```bash
+gunzip < your-backup-file.sql.gz
+```
+
+3. Use the `mysql` command-line tool to restore the database:
+
+```bash
+mysql -h [MYSQL_HOST] -P [MYSQL_PORT] -u [MYSQL_USER] -p [DATABASE_NAME] < your-backup-file.sql
+```
+
+Replace the placeholders `[MYSQL_HOST]`, `[MYSQL_PORT]`, `[MYSQL_USER]`, and `[DATABASE_NAME]` with your credentials and the name of the database you want to restore.
+
+The command will prompt you for the password of the MySQL user.
+
+### Steps for Restoring a PostgreSQL Database
+
+1. Download the `.sql.gz` file from the S3 bucket.
+2. Decompress the SQL file:
+
+```bash
+gunzip < your-backup-file.sql.gz
+```
+
+3. Use the `psql` command-line tool to restore the database:
+
+```bash
+psql -h [PG_HOST] -p [PG_PORT] -U [PG_USER] -d [DATABASE_NAME] -f your-backup-file.sql
+```
+
+Replace the placeholders `[PG_HOST]`, `[PG_PORT]`, `[PG_USER]`, and `[DATABASE_NAME]` with your credentials and the name of the database you want to restore.
+
+The command will prompt you for the password of the PostgreSQL user.
 
 ## Troubleshooting
 
