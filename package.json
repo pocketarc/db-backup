@@ -1,0 +1,13 @@
+{
+  "name": "db-backup",
+  "description": "Docker-based cron job for backing up databases to S3.",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "deno run --allow-env --allow-net --allow-run=mysql,mysqldump,gzip,aws,pg_dump,psql --allow-read=/tmp/db-backup.sql,/tmp/db-backup.sql.gz --allow-write=/tmp/db-backup.sql,/tmp/db-backup.sql.gz index.ts",
+    "lint": "deno fmt && deno lint"
+  },
+  "dependencies": {
+    "cron": "^3.1.6"
+  }
+}
